@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор цитат Джейсона Стэйтема</title>
+    <style>
+        body {
+            font-family: 'Arial Black', Impact, sans-serif;
+            background: #000;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        h1 {
+            color: #f00;
+            text-shadow: 0 0 15px #f00;
+            font-size: 3em;
+            margin-bottom: 30px;
+        }
+        button {
+            background: linear-gradient(to bottom, #111, #333);
+            color: #fff;
+            border: 3px solid #f00;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            cursor: pointer;
+            margin: 20px auto;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px #f00;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(to bottom, #333, #555);
+            transform: scale(1.05);
+        }
+        .small-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 10px;
+        }
+        #result {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 700px;
+            font-size: 2em;
+            min-height: 120px;
+            border: 4px solid #f00;
+            text-shadow: 0 0 10px #f00;
+        }
+        .media-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+        .gif-container, .video-container {
+            border: 4px solid #f00;
+            box-shadow: 0 0 30px #f00;
+        }
+        .gif-container {
+            width: 500px;
+        }
+        .video-container {
+            width: 600px;
+        }
+        .blood-text {
+            animation: blood-drip 3s infinite;
+        }
+        @keyframes blood-drip {
+            0% { text-shadow: 0 0 10px #f00; }
+            50% { text-shadow: 0 0 20px #f00, 0 5px 5px rgba(255,0,0,0.5); }
+            100% { text-shadow: 0 0 10px #f00; }
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="blood-text">ГЕНЕРАТОР ЦИТАТ ДЖЕЙСОНА СТЭТЕМА</h1>
+    
+    <div class="media-container">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDZ5bW5nZ3V5a2NqNnR5dG5zN2N6Z2h1cWx6eGJmY2VjZ3RzbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKTDNV0VZq8ZbI4/giphy.gif" alt="Jason Statham" style="width:100%">
+        </div>
+        
+        <div class="video-container">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/kYtYjTPCq3A?autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+    
+    <button onclick="generateQuote()">ПОЛУЧИТЬ ЦИТАТУ</button>
+    
+    <div id="result" class="blood-text">"Сила не в бабках... ведь они старые"</div>
+    
+    <div class="controls">
+        <button onclick="toggleVideo()" class="small-btn">▶️ ВКЛ/ВЫКЛ ВИДЕО</button>
+        <button onclick="playSound('pidory')" class="small-btn">🔊 МЫ ПИДОРЫ</button>
+    </div>
+
+    <script>
+        const quotes = [
+            "Сила не в бабках... ведь они старые",
+            "Я не ношу часы - время само подстраивается под меня",
+            "Если ты не можешь сделать это за 60 секунд - ты уже проиграл",
+            "Деньги не пахнут... потому что я их стираю",
+            "Моя лысина - это аэродинамический обтекатель для удара",
+            "Я не бегу за деньгами - они бегут за мной... но не догоняют",
+            "Настоящий мужик моет голову шампунем для машинного масла",
+            "Если бы я был женщиной - я бы сам на себе женился",
+            "Я не старею - я просто увеличиваю уровень крутости",
+            "Моя улыбка - это предупреждение перед ударом"
+        ];
+
+        const sounds = {
+            apple: 'https://www.myinstants.com/media/sounds/apple-pay.mp3',
+            depnul: 'https://www.myinstants.com/media/sounds/mister-bist-depnul-doma-v-kazik.mp3',
+            pidory: 'https://www.myinstants.com/media/sounds/my-pidory.mp3',
+            utro: 'https://www.myinstants.com/media/sounds/dobroe-utro-moia-devochka.mp3'
+        };
+
+        function generateQuote() {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById("result").textContent = `"${randomQuote}"`;
+            
+            document.getElementById("result").style.animation = 'none';
+            setTimeout(() => {
+                document.getElementById("result").style.animation = 'blood-drip 3s infinite';
+            }, 10);
+            
+            // Проверяем время суток
+            const now = new Date();
+            const hours = now.getHours();
+            
+            if (hours < 12) {
+                playSound('utro'); // Доброе утро, девочка
+            } else {
+                playSound('apple'); // Apple Pay
+            }
+        }
+
+        function toggleVideo() {
+            const iframe = document.querySelector('iframe');
+            if (iframe.src.includes("autoplay=1")) {
+                iframe.src = iframe.src.replace("autoplay=1", "autoplay=0");
+            } else {
+                iframe.src = iframe.src.replace("autoplay=0", "autoplay=1");
+                playSound('depnul'); // Дебнул дома
+            }
+        }
+
+        function playSound(type) {
+            const audio = new Audio(sounds[type]);
+            audio.play().catch(e => console.log("Браузер заблокировал звук, как твою социальную жизнь"));
+        }
+    </script>
+</body>
+</html>
